@@ -1,0 +1,21 @@
+.list {
+    border: 3px solid #043353;
+    border-radius: 5%;
+    background-color: #FAF8F0;
+    text-align: center;
+    padding: auto 0;
+}
+
+.header-container {
+    padding: 0 auto;
+    justify-content: space-between;
+}
+
+.header {
+    width: 150px;
+    
+}
+
+.list:hover {
+    background-color: #E4DFCF;
+}

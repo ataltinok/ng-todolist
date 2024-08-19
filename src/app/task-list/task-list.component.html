@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<div class="list">
+    <div class="header-container">
+        <h2 class="header" (click)="addTask()"> {{ header }} </h2>
+    </div>
+</div>
+@for (task of tasks; track task) {
+    <p class="item">{{task.text}}</p>
+}
