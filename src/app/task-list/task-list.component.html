@@ -1,9 +1,18 @@
-<!DOCTYPE html>
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
 <div class="list">
     <div class="header-container">
-        <h2 class="header" (click)="addTask()"> {{ header }} </h2>
+        <h2 class="header" (click)="addTask(header)"> {{ header }} </h2>
     </div>
 </div>
 @for (task of tasks; track task) {
-    <p class="item">{{task.text}}</p>
+    <div class="task-container">
+        <span class="task" (click)="promoteTask(task)"><p>{{task.text + " " +task.id}}</p></span>
+        <span class="icons">
+            <i id="edit-icon" class="material-icons" (click)="editTask(task)">edit</i>
+            <i id="trash-icon" class="material-icons" (click)="deleteTask(task)">delete</i>
+        </span>
+    </div>
 }

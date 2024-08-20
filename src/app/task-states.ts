@@ -1,5 +1,5 @@
 export enum TaskStates {
-    idle = 0,
-    inProgress,
-    completed
+    Idle = 0,
+    Started,
+    Completed
 }

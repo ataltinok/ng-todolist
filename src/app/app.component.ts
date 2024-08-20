@@ -12,4 +12,5 @@ import { TaskComponent } from './task/task.component';
 })
 export class AppComponent {
   title = 'todo-list';
+  
 }

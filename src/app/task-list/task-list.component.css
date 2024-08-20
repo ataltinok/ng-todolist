@@ -7,15 +7,36 @@
 }
 
 .header-container {
+    max-width: fit-content;
+    margin-inline: auto;
     padding: 0 auto;
     justify-content: space-between;
 }
 
 .header {
     width: 150px;
-    
 }
 
 .list:hover {
     background-color: #E4DFCF;
+}
+
+.task-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1em;
+    padding-left: 1em;
+    padding-right: 0.5em;
+    border: black, 1px, dotted
+}
+
+#trash-icon {
+    height: 30px;
+    width: 30;
+}
+
+#edit-icon {
+    height: 30px;
+    width: 42px;
 }
