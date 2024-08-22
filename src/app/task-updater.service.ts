@@ -6,11 +6,15 @@ import { TaskComponent } from './task/task.component';
   providedIn: 'root'
 })
 export class TaskUpdaterService {
-  private promotedTaskSource = new Subject<{promotedTask: TaskComponent, newHeader: string}>();
+  private updatedTaskSource = new Subject<{updatedTask: TaskComponent, newHeader: string}>();
   
-  promotedTask$ = this.promotedTaskSource.asObservable();
+  updatedTask$ = this.updatedTaskSource.asObservable();
 
-  promoteTask(promotedTask: TaskComponent, newHeader: string): void {
-    this.promotedTaskSource.next({promotedTask, newHeader});
+  promoteTask(updatedTask: TaskComponent, newHeader: string): void {
+    this.updatedTaskSource.next({updatedTask, newHeader});
+  }  
+
+  demoteTask(updatedTask: TaskComponent, newHeader: string): void {
+    this.updatedTaskSource.next({updatedTask, newHeader});
   }  
 }

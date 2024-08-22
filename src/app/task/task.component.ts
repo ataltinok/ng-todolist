@@ -10,5 +10,6 @@ import { TaskStates } from '../task-states';
 })
 export class TaskComponent {
   text = "New task";
-  @Input() id!: number;
+  edit = false;
+  @Input() id!: string;
 }

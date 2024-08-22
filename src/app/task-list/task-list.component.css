@@ -1,9 +1,10 @@
 .list {
-    border: 3px solid #043353;
-    border-radius: 5%;
-    background-color: #FAF8F0;
+    border: 3px solid #428e8e;
+    border-radius: 10px;
+    background-color: #222;
     text-align: center;
     padding: auto 0;
+    color: white;
 }
 
 .header-container {
@@ -18,7 +19,7 @@
 }
 
 .list:hover {
-    background-color: #E4DFCF;
+    background-color: #333;
 }
 
 .task-container {
@@ -28,15 +29,38 @@
     margin-top: 1em;
     padding-left: 1em;
     padding-right: 0.5em;
-    border: black, 1px, dotted
+    border-radius: 5px;
+    background-color: #444;
+    border: black, 1px, #444;
+    height: 50px;
 }
 
-#trash-icon {
-    height: 30px;
-    width: 30;
+.task-container p {
+    color: #CCC;
+    font-size: large;
 }
 
-#edit-icon {
-    height: 30px;
-    width: 42px;
+.task-container input {
+    color: #CCC;
+    font-size: large;
+    background-color: #444;
+    border: none;
+}
+
+.Completed {
+    text-decoration: line-through;
+    text-decoration-thickness: 3px;
+}
+
+.lightgray-icon {
+    color: #CCC;
+}
+
+.lightgray-icon:hover {
+    color: #EEE;
+}
+
+.material-icons {
+    margin-left: 10px;
+    margin-top: 5px;
 }

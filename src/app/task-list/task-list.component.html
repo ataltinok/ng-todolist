@@ -2,17 +2,41 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
-<div class="list">
+<div class="list" (click)="addTask(header)">
     <div class="header-container">
-        <h2 class="header" (click)="addTask(header)"> {{ header }} </h2>
+        <h2 class="header"> {{ header }} </h2>
     </div>
 </div>
+<!-- promote edit delete , done delete , delete-->
 @for (task of tasks; track task) {
     <div class="task-container">
-        <span class="task" (click)="promoteTask(task)"><p>{{task.text + " " +task.id}}</p></span>
+    @if (header === "Idle") {
+        @if (!task.edit) {
+            <span class="task"><p id={{task.id}} class={{header}} (click)="toggleEdit(task)">{{task.text}}</p></span>
+            <span class="icons">
+                <i class="material-icons promote-icon lightgray-icon" (click)="promoteTask(task)">arrow_upward</i>
+                <i class="material-icons trash-icon lightgray-icon" (click)="deleteTask(task)">delete</i>
+            </span>
+        } @else {
+            <span class="task"><input id={{task.id}} class={{header}} autocomplete="off"/></span>
+            <span class="icons">
+                <i class="material-icons done-icon lightgray-icon" (click)="confirmEdit(task)">done_outline</i>
+                <i class="material-icons edit-icon lightgray-icon" (click)="toggleEdit(task)">cancel</i>
+            </span>
+        }
+    } @else if (header === "Started") {
+        <span class="task"><p id={{task.id}} class={{header}}>{{task.text}}</p></span>
         <span class="icons">
-            <i id="edit-icon" class="material-icons" (click)="editTask(task)">edit</i>
-            <i id="trash-icon" class="material-icons" (click)="deleteTask(task)">delete</i>
+            <i class="material-icons demote-icon lightgray-icon" (click)="demoteTask(task)">arrow_downward</i>
+            <i class="material-icons done-icon lightgray-icon" (click)="promoteTask(task)">done</i>
+            <i class="material-icons trash-icon lightgray-icon" (click)="deleteTask(task)">delete</i>
         </span>
+    } @else if (header === "Completed") {
+        <span class="task"><p id={{task.id}} class={{header}}>{{task.text}}</p></span>
+        <span class="icons">
+            <i class="material-icons demote-icon lightgray-icon" (click)="demoteTask(task)">arrow_downward</i>
+            <i class="material-icons trash-icon lightgray-icon" (click)="deleteTask(task)">delete</i>
+        </span>
+    }
     </div>
 }

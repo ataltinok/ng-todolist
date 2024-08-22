@@ -1,3 +1,7 @@
+* {
+    background-color: #111;
+}
+
 .task-container {
     display: flex;
     justify-content: space-between;  /* Evenly space the columns */
@@ -8,11 +12,10 @@
     flex: 1;  /* Make each column take equal space */
     margin: 0 1em;  /* Add some margin between columns */
     text-align: center;  /* Center-align the text within each column */
+    margin-left: 5em;
+    margin-right: 5em;
 }
 
 .column task-list {
     display: block;
-    padding: 1em;
-    border: 1px solid #ddd;  /* Optional: Add a border to visually separate the columns */
-    background-color: #f9f9f9;  /* Optional: Background color for the task lists */
 }

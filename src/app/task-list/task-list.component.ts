@@ -21,9 +21,9 @@ export class TaskListComponent {
     let result = this.getTasks(this.header);
     this.loadTasks(result);
 
-    this.taskUpdaterService.promotedTask$.subscribe(({promotedTask, newHeader}) => {
+    this.taskUpdaterService.updatedTask$.subscribe(({updatedTask, newHeader}) => {
       if (newHeader === this.header) {
-        this.addTask(this.header, promotedTask)
+        this.addTask(this.header, updatedTask)
       }
     });
   }
@@ -39,7 +39,7 @@ export class TaskListComponent {
   addTask(header: string, task?: TaskComponent): void {
     let taskCount = Number(JSON.parse(localStorage.getItem("taskCount") ?? '0'));
     task = task ?? new TaskComponent();
-    task.id = taskCount + 1;
+    task.id = String(Number(taskCount) + 1);
     
     this.tasks.push(task);
     localStorage.setItem(header + 'Tasks', JSON.stringify(this.tasks))
@@ -83,8 +83,26 @@ export class TaskListComponent {
     this.taskUpdaterService.promoteTask(task, newHeader);
   }
 
-  editTask(task: TaskComponent) {
-    
+  demoteTask(task: TaskComponent) {
+    this.deleteTask(task);
+    let newHeader = "";
+    if (this.header === "Started") {
+      newHeader = "Idle"
+    } else if (this.header === "Completed") {
+      newHeader = "Started";
+    } else {
+      return;
+    }
+    this.taskUpdaterService.demoteTask(task, newHeader);
   }
-  
+
+  toggleEdit(task: TaskComponent) {
+    task.edit = !task.edit;
+  }
+
+  confirmEdit(task: TaskComponent) {
+    const inputElement = <HTMLInputElement> document.getElementById(task.id);
+    this.toggleEdit(task);
+    task.text = inputElement.value === "" ? task.text : inputElement.value;
+  }
 }
