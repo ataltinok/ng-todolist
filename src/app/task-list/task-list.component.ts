@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { NgFor } from '@angular/common';
 import { TaskComponent } from '../task/task.component';
 import { TaskStates } from '../task-states';
 import { TaskUpdaterService } from '../task-updater.service';
@@ -6,7 +7,7 @@ import { TaskUpdaterService } from '../task-updater.service';
 @Component({
   selector: 'task-list',
   standalone: true,
-  imports: [TaskComponent],
+  imports: [TaskComponent, NgFor],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
 })
@@ -37,11 +38,16 @@ export class TaskListComponent {
   }
 
   addTask(header: string, task?: TaskComponent): void {
+    // Prepare task
     let taskCount = Number(JSON.parse(localStorage.getItem("taskCount") ?? '0'));
     task = task ?? new TaskComponent();
     task.id = String(Number(taskCount) + 1);
     
-    this.tasks.push(task);
+    // Add new task at the top
+    this.tasks.splice(0, 0, task);
+    setTimeout(() => task.isNew = false, 500);
+
+    // Update the stored tasks
     localStorage.setItem(header + 'Tasks', JSON.stringify(this.tasks))
     localStorage.setItem("taskCount", JSON.stringify(task.id));
   }
@@ -81,6 +87,7 @@ export class TaskListComponent {
       return;
     }
     this.taskUpdaterService.promoteTask(task, newHeader);
+    setTimeout(() => this.tasks = this.tasks.filter(t => t !== task), 300);
   }
 
   demoteTask(task: TaskComponent) {
@@ -98,11 +105,29 @@ export class TaskListComponent {
 
   toggleEdit(task: TaskComponent) {
     task.edit = !task.edit;
+
+    // This is probably bad practice but I don't care, it works.
+    setTimeout(() => {
+      const textAreaElement = <HTMLTextAreaElement> document.getElementById(task.id);
+      textAreaElement.focus()
+      textAreaElement.setSelectionRange(textAreaElement.value.length, textAreaElement.value.length); 
+    }, 50)
   }
 
-  confirmEdit(task: TaskComponent) {
-    const inputElement = <HTMLInputElement> document.getElementById(task.id);
+  confirmEdit(header: string, task: TaskComponent) {
+    // Access DOM directly here because it is definitely loaded when I press it.
+    const textAreaElement = <HTMLTextAreaElement> document.getElementById(task.id);
     this.toggleEdit(task);
-    task.text = inputElement.value === "" ? task.text : inputElement.value;
+    task.text = textAreaElement.value === "" ? task.text : textAreaElement.value;
+    
+    // Update the local storage
+    this.tasks.splice(this.tasks.indexOf(task), 1, task)
+    localStorage.setItem(header + 'Tasks', JSON.stringify(this.tasks))
+  }
+
+  adjustTextareaHeight(event: any) {
+    const textarea = event.target;
+    textarea.style.height = 'auto'; // Reset height
+    textarea.style.height = textarea.scrollHeight + 'px'; // Set to the scroll height
   }
 }

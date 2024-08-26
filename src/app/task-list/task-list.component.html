@@ -7,36 +7,34 @@
         <h2 class="header"> {{ header }} </h2>
     </div>
 </div>
-<!-- promote edit delete , done delete , delete-->
-@for (task of tasks; track task) {
-    <div class="task-container">
+<!-- promote edit delete , demote done delete , demote delete-->
+<div *ngFor="let task of tasks" class="task-container">
     @if (header === "Idle") {
         @if (!task.edit) {
             <span class="task"><p id={{task.id}} class={{header}} (click)="toggleEdit(task)">{{task.text}}</p></span>
             <span class="icons">
-                <i class="material-icons promote-icon lightgray-icon" (click)="promoteTask(task)">arrow_upward</i>
-                <i class="material-icons trash-icon lightgray-icon" (click)="deleteTask(task)">delete</i>
+                <i class="material-icons icon blue-icon" (click)="promoteTask(task)">arrow_upward</i>
+                <i class="material-icons icon gray-icon" (click)="deleteTask(task)">delete</i>
             </span>
         } @else {
-            <span class="task"><input id={{task.id}} class={{header}} autocomplete="off"/></span>
+            <span class="task"><textarea id={{task.id}} class={{header}} autocomplete="off" (keydown.enter)="confirmEdit(header, task)" (input)="adjustTextareaHeight($event)">{{task.text}}</textarea></span>
             <span class="icons">
-                <i class="material-icons done-icon lightgray-icon" (click)="confirmEdit(task)">done_outline</i>
-                <i class="material-icons edit-icon lightgray-icon" (click)="toggleEdit(task)">cancel</i>
+                <i class="material-icons icon green-icon" (click)="confirmEdit(header, task)">done_outline</i>
+                <i class="material-icons icon red-icon" (click)="toggleEdit(task)">cancel</i>
             </span>
         }
     } @else if (header === "Started") {
         <span class="task"><p id={{task.id}} class={{header}}>{{task.text}}</p></span>
         <span class="icons">
-            <i class="material-icons demote-icon lightgray-icon" (click)="demoteTask(task)">arrow_downward</i>
-            <i class="material-icons done-icon lightgray-icon" (click)="promoteTask(task)">done</i>
-            <i class="material-icons trash-icon lightgray-icon" (click)="deleteTask(task)">delete</i>
+            <i class="material-icons icon red-icon" (click)="demoteTask(task)">arrow_downward</i>
+            <i class="material-icons icon green-icon" (click)="promoteTask(task)">done</i>
+            <i class="material-icons icon gray-icon" (click)="deleteTask(task)">delete</i>
         </span>
     } @else if (header === "Completed") {
         <span class="task"><p id={{task.id}} class={{header}}>{{task.text}}</p></span>
         <span class="icons">
-            <i class="material-icons demote-icon lightgray-icon" (click)="demoteTask(task)">arrow_downward</i>
-            <i class="material-icons trash-icon lightgray-icon" (click)="deleteTask(task)">delete</i>
+            <i class="material-icons icon red-icon" (click)="demoteTask(task)">arrow_downward</i>
+            <i class="material-icons icon gray-icon" (click)="deleteTask(task)">delete</i>
         </span>
     }
-    </div>
-}
+</div>

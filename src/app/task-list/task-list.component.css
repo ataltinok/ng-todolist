@@ -1,3 +1,25 @@
+@keyframes slide-in {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes pop-out {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1.2);
+      opacity: 0;
+    }
+  }  
+
 .list {
     border: 3px solid #428e8e;
     border-radius: 10px;
@@ -32,7 +54,9 @@
     border-radius: 5px;
     background-color: #444;
     border: black, 1px, #444;
-    height: 50px;
+    height: auto;
+    min-height: 50px;
+    max-width: 100%;    
 }
 
 .task-container p {
@@ -40,11 +64,20 @@
     font-size: large;
 }
 
-.task-container input {
+.task-container textarea {
     color: #CCC;
     font-size: large;
     background-color: #444;
     border: none;
+    width: 100%; /* Allow full width */
+    height: auto; /* Adjust height dynamically */
+    overflow: hidden; /* Hide overflow */
+    resize: none; /* Prevent manual resize */
+}
+
+.task {
+    overflow: auto;
+    text-align: left;
 }
 
 .Completed {
@@ -52,15 +85,37 @@
     text-decoration-thickness: 3px;
 }
 
-.lightgray-icon {
-    color: #CCC;
+.icon {
+    --icon-color: #000; /* default */
+    --hover-color: #000; /* default */
+    color: var(--icon-color);
+    cursor: pointer;
+}
+  
+.icon:hover {
+    color: var(--hover-color);
 }
 
-.lightgray-icon:hover {
-    color: #EEE;
+.red-icon {
+    --icon-color: #b02828;
+    --hover-color: #d03838;
 }
 
+.gray-icon {
+    --icon-color: #BBB;
+    --hover-color: #EEE;
+}
+
+.blue-icon {
+    --icon-color: #3e9bc6;
+    --hover-color: #49e9e9;
+}  
+
+.green-icon {
+    --icon-color: #2e9638;
+    --hover-color: #4ee949;
+}  
+    
 .material-icons {
     margin-left: 10px;
-    margin-top: 5px;
 }
