@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf} from '@angular/common';
 import { TaskComponent } from '../task/task.component';
 import { TaskStates } from '../task-states';
 import { TaskUpdaterService } from '../task-updater.service';
@@ -7,7 +7,7 @@ import { TaskUpdaterService } from '../task-updater.service';
 @Component({
   selector: 'task-list',
   standalone: true,
-  imports: [TaskComponent, NgFor],
+  imports: [TaskComponent, NgFor, NgIf],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css'
 })
@@ -45,7 +45,6 @@ export class TaskListComponent {
     
     // Add new task at the top
     this.tasks.splice(0, 0, task);
-    setTimeout(() => task.isNew = false, 500);
 
     // Update the stored tasks
     localStorage.setItem(header + 'Tasks', JSON.stringify(this.tasks))
@@ -107,11 +106,14 @@ export class TaskListComponent {
     task.edit = !task.edit;
 
     // This is probably bad practice but I don't care, it works.
-    setTimeout(() => {
-      const textAreaElement = <HTMLTextAreaElement> document.getElementById(task.id);
-      textAreaElement.focus()
-      textAreaElement.setSelectionRange(textAreaElement.value.length, textAreaElement.value.length); 
-    }, 50)
+    
+    if (task.edit) {
+      setTimeout(() => {
+        const textAreaElement = <HTMLTextAreaElement> document.getElementById(task.id);
+        textAreaElement.focus()
+        textAreaElement.setSelectionRange(textAreaElement.value.length, textAreaElement.value.length); 
+      }, 50)
+    }
   }
 
   confirmEdit(header: string, task: TaskComponent) {

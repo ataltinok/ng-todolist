@@ -1,25 +1,3 @@
-@keyframes slide-in {
-    from {
-      transform: translateX(-100%);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-  
-  @keyframes pop-out {
-    0% {
-      transform: scale(1);
-      opacity: 1;
-    }
-    100% {
-      transform: scale(1.2);
-      opacity: 0;
-    }
-  }  
-
 .list {
     border: 3px solid #428e8e;
     border-radius: 10px;
@@ -38,6 +16,7 @@
 
 .header {
     width: 150px;
+    user-select: none; /* Standard */
 }
 
 .list:hover {
@@ -69,10 +48,10 @@
     font-size: large;
     background-color: #444;
     border: none;
-    width: 100%; /* Allow full width */
-    height: auto; /* Adjust height dynamically */
-    overflow: hidden; /* Hide overflow */
-    resize: none; /* Prevent manual resize */
+    width: 100%; 
+    height: auto; 
+    overflow: hidden; 
+    resize: none; 
 }
 
 .task {
@@ -85,11 +64,16 @@
     text-decoration-thickness: 3px;
 }
 
+.icons {
+    display: flex;
+}
+
 .icon {
     --icon-color: #000; /* default */
     --hover-color: #000; /* default */
     color: var(--icon-color);
     cursor: pointer;
+    user-select: none; /* Standard */
 }
   
 .icon:hover {
